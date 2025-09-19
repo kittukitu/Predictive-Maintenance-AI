@@ -1,133 +1,78 @@
-🔧 Predictive Maintenance AI
+Predictive Maintenance: Sensor-Based Failure Prediction
+This project simulates daily machine sensor data, labels failure events, and applies machine learning for predictive maintenance—alerting for failures before they occur, and visualizing sensor trends and risk likelihoods.
 
-An AI-powered predictive maintenance system that analyzes sensor readings (temperature, vibration, pressure, usage cycles) to predict equipment failures, optimize maintenance scheduling, and minimize costs.
-It combines a Random Forest ML model with Google Gemini AI for professional recommendations.
+Features
+Synthetic dataset of daily vibration, temperature, and pressure sensor data for one year.
 
-🚀 Features
+Simulated machine failures based on sensor patterns.
 
-Predicts failure probability from sensor data.
+Target: Predict whether a machine will fail the next day (“failure_tomorrow”).
 
-Estimates failure timeline (cycles left).
+Model: Time-aware train/test split, XGBoost classification for next-day failure prediction.
 
-Suggests maintenance schedule (immediate, preventive, or routine).
+User input: Predict next-day failure risk for user-entered sensor readings.
 
-Provides cost optimization strategy.
+Automated maintenance recommendations based on predicted risk.
 
-Uses Gemini AI for professional recommendations & explanations.
+Visualizations: Sensor data over time, and the empirical distribution of “days to failure”.
 
-Supports command-line arguments and interactive mode.
-
-⚙️ Installation
-1. Clone Repository
-git clone https://github.com/yourusername/predictive-maintenance-ai.git
-cd predictive-maintenance-ai
-
-2. Create Virtual Environment (recommended)
-python -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
-
-3. Install Dependencies
-pip install -r requirements.txt
-
-
-requirements.txt
+Requirements
+Python 3.x
 
 pandas
+
 numpy
+
+xgboost
+
 scikit-learn
-google-generativeai
-argparse
 
-🔑 Setup Gemini API
+matplotlib
 
-Get an API Key from Google AI Studio
-.
+seaborn
 
-Replace your key in the script:
+To install dependencies:
 
-genai.configure(api_key="YOUR_API_KEY")
+bash
+pip install pandas numpy xgboost scikit-learn matplotlib seaborn
+Usage
+Run the script
+The script will:
 
-🖥️ Usage
-Run with CLI arguments
-python app.py --temperature 85 --vibration 0.7 --pressure 35 --usage_cycles 500
+Generate a yearly predictive maintenance dataset (predictive_maintenance_dataset.csv)
 
-Run in interactive mode
-python app.py
+Train an XGBoost classifier for predicting machine failure the following day
 
+Evaluate model accuracy and classification report on the test set
 
-Example Output:
+Input Sensor Values for Prediction
 
-📊 Prediction Results
-----------------------------------------
-Failure Probability   : 0.62
-Timeline              : Expected failure in ~38 cycles
-Maintenance Schedule  : 🛠️ Schedule preventive maintenance soon (within 30 cycles).
-Cost Optimization     : Moderate cost risk. Combine maintenance with scheduled downtime.
+Enter sensor readings (vibration, temperature, pressure) at the prompt
 
-🤖 AI Recommendation:
-Schedule preventive maintenance to avoid sudden breakdowns.
+The model will display predicted next-day failure risk probability
 
-AI Explanation:
-The model shows a moderate probability of failure, and preventive scheduling helps reduce costs by avoiding unplanned downtime.
+Recommendations
 
-✅ Test Cases
-Test Case 1: Low Failure Probability
-python app.py --temperature 70 --vibration 0.4 --pressure 28 --usage_cycles 200
+High risk (>0.7): Schedule immediate maintenance
 
+Moderate risk (0.4–0.7): Monitor and plan maintenance
 
-Expected:
+Low risk (≤0.4): Continue normal operations
 
-Failure probability low (< 0.4).
+Visualizations
 
-Timeline: Long (> 50 cycles).
+Time-series line plot of vibration, temperature, and pressure
 
-Recommendation: Routine check only.
+Distribution histogram of "days to failure" labels
 
-Test Case 2: Medium Failure Probability
-python app.py --temperature 85 --vibration 0.7 --pressure 35 --usage_cycles 500
+Files
+predictive_maintenance_dataset.csv: Generated synthetic dataset with labels, sensor readings, and days to next failure
 
+Script file: Main executable script for data generation, modeling, risk prediction, and visualization
 
-Expected:
+Notes
+Train/test split preserves temporal order to avoid data leakage in time series prediction.
 
-Failure probability moderate (0.4–0.7).
+“Days to failure” label is simplified—real-world implementations require richer engineering and careful leakage prevention.
 
-Maintenance soon (~30 cycles).
-
-AI suggests preventive maintenance.
-
-Test Case 3: High Failure Probability
-python app.py --temperature 100 --vibration 1.2 --pressure 45 --usage_cycles 800
-
-
-Expected:
-
-Failure probability high (> 0.7).
-
-Immediate maintenance required.
-
-AI suggests urgent part replacement.
-
-📊 Methodology
-
-Data: Synthetic dataset of 300 sensor readings.
-
-Model: Random Forest Classifier (scikit-learn).
-
-Risk Rules:
-
-High Risk (>0.7) → Immediate maintenance.
-
-Medium Risk (0.4–0.7) → Preventive maintenance.
-
-Low Risk (≤0.4) → Routine checks.
-
-AI Layer: Gemini adds professional recommendations.
-
-📌 Roadmap
-
- Add real sensor integration (IoT data).
-
- Build Flask web dashboard.
-
- Add time-series failure prediction.
+Visualizations require a graphical environment to display.
